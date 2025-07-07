@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบและสมัครสมาชิก | ไข่หวานพาแซ่บ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fffdf8; /* สีพื้นหลังตามเว็บไซต์ของคุณ */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        /* --- Navigation Bar --- */
+        nav {
+            background-color: #ff6b6b; /* สีพื้นหลังของเมนูนำทาง */
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            white-space: nowrap;
+            padding: 5px 0;
+        }
+
+        nav a i {
+            margin-right: 6px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Style for Login/Register Buttons in Nav --- */
+        .auth-buttons {
+            margin-left: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .auth-buttons .btn {
+            background-color: #00796b;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            white-space: nowrap;
+            font-family: 'Kanit', sans-serif; /* เพิ่ม font-family */
+        }
+
+        .auth-buttons .btn.register {
+            background-color: #e67e22;
+        }
+
+        .auth-buttons .btn:hover {
+            background-color: #004d40;
+        }
+
+        .auth-buttons .btn.register:hover {
+            background-color: #d35400;
+        }
+
+        /* --- Page Header --- */
+        .page-header {
+            background-color: #4db6ac;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 2rem;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            margin-top: 75px; /* เว้นที่ให้ nav bar */
+        }
+        
+        /* --- General Modal Styles (applied to both login and register modals) --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1001; /* Sit on top, higher than nav */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6); /* Black w/ more opacity */
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px; /* กำหนดขนาดสูงสุด */
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            -webkit-animation: animatezoom 0.6s;
+            animation: animatezoom 0.6s;
+        }
+
+        /* Full-width input fields in modals */
+        .modal-content input[type=text], 
+        .modal-content input[type=password],
+        .modal-content input[type=email] { /* เพิ่ม input type email สำหรับ Register */
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 5px;
+        }
+
+        /* Buttons within modals */
+        .modal-content button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: opacity 0.3s ease, background-color 0.3s ease;
+            font-family: 'Kanit', sans-serif; /* เพิ่ม font-family */
+        }
+
+        .modal-content button:hover {
+            opacity: 0.9;
+            background-color: #038a5a;
+        }
+
+        /* Cancel button specific style */
+        .modal-content .cancelbtn {
+            width: auto; /* ตั้งเป็น auto เพื่อให้ float ได้ */
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+        .modal-content .cancelbtn:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Center avatar image */
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+            position: relative;
+        }
+
+        img.avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #eee;
+        }
+
+        /* Container for modal form elements */
+        .container {
+            padding: 16px;
+        }
+
+        /* Forgot password link */
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+        /* Close button (x) */
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            color: #000;
+            font-size: 35px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #f44336;
+            cursor: pointer;
+        }
+
+        /* Clear floats (for cancel/signup buttons) */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        /* --- Animation for modals --- */
+        @-webkit-keyframes animatezoom {
+            from {-webkit-transform: scale(0)}
+            to {-webkit-transform: scale(1)}
+        }
+
+        @keyframes animatezoom {
+            from {transform: scale(0)}
+            to {transform: scale(1)}
+        }
+
+        /* --- Responsive Styles --- */
+        @media screen and (max-width: 600px) {
+            span.psw {
+                display: block;
+                float: none;
+                text-align: center;
+            }
+            .modal-content .cancelbtn, 
+            .modal-content .signupbtn { /* ใช้ class เฉพาะเจาะจง */
+                width: 100%;
+                margin-top: 10px;
+            }
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+            }
+            .auth-buttons {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            .page-header {
+                margin-top: 140px;
+            }
+        }
+
+        /* --- Footer Section --- */
+        footer {
+            background-color: #006241;
+            color: white;
+            padding: 40px 20px;
+            font-family: 'Kanit', sans-serif;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 50px;
+        }
+
+        footer h3 {
+            margin-top: 0;
+            color: #ffe0b2;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        footer li {
+            margin-bottom: 8px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            transition: text-decoration 0.3s ease;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        footer form input[type="email"] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            width: calc(70% - 10px);
+        }
+
+        footer form button {
+            padding: 10px 15px;
+            border: none;
+            background: white;
+            color: #006241;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-family: 'Kanit', sans-serif; /* เพิ่ม font-family */
+        }
+
+        footer form button:hover {
+            background-color: #eee;
+        }
+
+        .copyright-footer {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Specific styles for Login vs Register buttons in modal forms */
+        .login-btn-group .cancelbtn, .signup-btn-group .cancelbtn {
+            width: auto; /* ให้ปุ่ม Cancel กว้างพอดีข้อความเมื่ออยู่ในกลุ่ม */
+        }
+        .login-btn-group button[type="submit"], 
+        .signup-btn-group button[type="submit"] {
+            width: 100%; /* ให้ปุ่ม Submit เต็มความกว้าง */
+        }
+        /* Align buttons for register form */
+        .signup-btn-group .cancelbtn, .signup-btn-group .signupbtn {
+            float: left;
+            width: 50%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index1.html"><i class="fas fa-home"></i> หน้าแรก</a>
+        <a href="drink-menu.html"><i class="fas fa-coffee"></i> เครื่องดื่ม</a>
+        <a href="dessert-menu.html"><i class="fas fa-ice-cream"></i> ของหวาน</a>
+        <a href="savory-menu.html"><i class="fas fa-utensils"></i> ของคาว</a>
+        <a href="snack-menu.html"><i class="fas fa-cookie-bite"></i> ของกินเล่น</a>
+        <a href="alcohol-menu.html"><i class="fas fa-wine-glass-alt"></i> แอลกอฮอล์</a>
+        <a href="herbal-menu.html"><i class="fas fa-leaf"></i> สมุนไพร</a>
+
+        <div class="auth-buttons">
+            <button onclick="document.getElementById('loginModal').style.display='block'" class="btn"><i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ</button>
+            <button onclick="document.getElementById('registerModal').style.display='block'" class="btn register"><i class="fas fa-user-plus"></i> สมัครสมาชิก</button>
+        </div>
+    </nav>
+
+    <header class="page-header">หน้าเข้าสู่ระบบและสมัครสมาชิก - ไข่หวานพาแซ่บ</header>
+
+    <button id="openLoginBtn" onclick="document.getElementById('loginModal').style.display='block'">เปิดฟอร์มเข้าสู่ระบบ</button>
+    <button id="openRegisterBtn" onclick="document.getElementById('registerModal').style.display='block'" style="margin-left: 10px;">เปิดฟอร์มสมัครสมาชิก</button>
+
+
+    <div id="loginModal" class="modal">
+        <form class="modal-content animate" action="/action_page.php" method="post">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('loginModal').style.display='none'" class="close" title="ปิดฟอร์ม">&times;</span>
+                <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+                <h2>เข้าสู่ระบบ</h2>
+                <label for="uname"><b>ชื่อผู้ใช้</b></label>
+                <input type="text" placeholder="ป้อนชื่อผู้ใช้" name="uname" required>
+
+                <label for="psw"><b>รหัสผ่าน</b></label>
+                <input type="password" placeholder="ป้อนรหัสผ่าน" name="psw" required>
+
+                <button type="submit">เข้าสู่ระบบ</button>
+                <label>
+                    <input type="checkbox" checked="checked" name="remember"> จดจำฉัน
+                </label>
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('loginModal').style.display='none'" class="cancelbtn">ยกเลิก</button>
+                <span class="psw">ลืม <a href="#">รหัสผ่าน?</a></span>
+            </div>
+        </form>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <span onclick="document.getElementById('registerModal').style.display='none'" class="close" title="ปิดฟอร์ม">&times;</span>
+        <form class="modal-content animate" action="/action_page.php" method="post">
+            <div class="container">
+                <h1>สมัครสมาชิก</h1>
+                <p>กรุณากรอกข้อมูลเพื่อสร้างบัญชีผู้ใช้</p>
+                <hr>
+                <label for="email"><b>อีเมล</b></label>
+                <input type="email" placeholder="ป้อนอีเมล" name="email" required>
+
+                <label for="psw-reg"><b>รหัสผ่าน</b></label>
+                <input type="password" placeholder="ป้อนรหัสผ่าน" name="psw-reg" required> <label for="psw-repeat"><b>ยืนยันรหัสผ่าน</b></label>
+                <input type="password" placeholder="ยืนยันรหัสผ่าน" name="psw-repeat" required>
+                
+                <label>
+                    <input type="checkbox" checked="checked" name="remember-reg" style="margin-bottom:15px"> จดจำฉัน </label>
+
+                <p>การสร้างบัญชีหมายถึงคุณยอมรับ <a href="#" style="color:dodgerblue">ข้อกำหนดและนโยบายความเป็นส่วนตัว</a> ของเรา</p>
+
+                <div class="clearfix">
+                    <button type="button" onclick="document.getElementById('registerModal').style.display='none'" class="cancelbtn">ยกเลิก</button>
+                    <button type="submit" class="signupbtn">สมัครสมาชิก</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1200px; margin: auto;">
+
+            <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+                <img src="โลโก้/l1.png" alt="ไข่หวานพาแซ่บ" style="width: 60px; margin-bottom: 10px;">
+                <h3>เกี่ยวกับเรา</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li>ร้านไข่หวานพาแซ่บ</li>
+                    <li>อาหารอีสาน-เครื่องดื่ม-ของหวาน</li>
+                    <li>ตั้งอยู่ในตัวเมืองสกลนคร</li>
+                    <li>เปิดบริการทุกวัน 09:00 - 20:00 น.</li>
+                </ul>
+            </div>
+
+            <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+                <h3>ติดต่อเรา</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li>นายปิติ อินทร์พจน์ (ไข่หวาน)</li>
+                    <li>เบอร์: 098-150-9975</li>
+                    <li>อีเมล: 67319010044@swdtcmail.com</li>
+                    <li><a href="https://www.facebook.com/share/1BdZTKfASz/" target="_blank">Facebook: ปิติ อินทร์พจน์</a></li>
+                </ul>
+            </div>
+
+            <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+                <h3>ติดตามเรา</h3>
+                <div style="margin-bottom: 10px;">
+                    <a href="https://www.facebook.com/share/1BdZTKfASz/" target="_blank">📘 Facebook</a><br>
+                    <a href="https://www.instagram.com/pitiinphot?igsh=aWx3NGh4YzllNXNw" target="_blank">📸 Instagram</a><br>
+                    <a href="https://line.me/ti/p/7FKgXfSrA7" target="_blank">💬 Line</a>
+                </div>
+                <p>สมัครรับข่าวสารและโปรโมชั่น</p>
+                <form>
+                    <input type="email" placeholder="ใส่อีเมลของคุณ">
+                    <button>เข้าร่วม</button>
+                </form>
+            </div>
+
+            <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+                <h3>QR CODE ร้าน</h3>
+                <img src="รับตังค์/987.jpg" alt="QR Code" style="width: 100px; margin-bottom: 10px;">
+                <p>สแกนเพื่อดูเมนูออนไลน์ หรือสั่งล่วงหน้า</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <footer class="copyright-footer">
+        © 2025 ไข่หวานพาแซ่บ | สดชื่นทุกแก้ว แซ่บทุกคำ
+    </footer>
+
+    <script>
+        // Get the modals
+        var loginModal = document.getElementById('loginModal');
+        var registerModal = document.getElementById('registerModal');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == loginModal) {
+                loginModal.style.display = "none";
+            }
+            if (event.target == registerModal) {
+                registerModal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
