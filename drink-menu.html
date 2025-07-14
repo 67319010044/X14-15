@@ -12,7 +12,6 @@
             background-color: #fffdf8;
             margin: 0;
             padding: 0;
-            /* เพิ่ม display: flex, flex-direction, min-height เพื่อให้ footer อยู่ด้านล่างสุดเสมอ */
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -23,24 +22,24 @@
             background-color: #ff6b6b;
             padding: 15px;
             text-align: center;
-            display: flex; /* ใช้ flexbox จัดเรียงรายการใน nav */
-            flex-wrap: wrap; /* ให้ขึ้นบรรทัดใหม่ได้เมื่อหน้าจอเล็ก */
-            justify-content: center; /* จัดให้อยู่กึ่งกลาง */
-            gap: 15px; /* เพิ่มระยะห่างระหว่างลิงก์/ปุ่ม */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            position: fixed; /* ตรึง Navbar ไว้ด้านบน */
+            position: fixed;
             width: 100%;
             top: 0;
             left: 0;
-            z-index: 1000; /* ให้ Navbar อยู่บนสุด */
+            z-index: 1000;
         }
 
         nav a {
             color: white;
             text-decoration: none;
             font-size: 1.1rem;
-            white-space: nowrap; /* ป้องกันลิงก์/ปุ่มไม่ให้ขึ้นบรรทัดใหม่กลางคำ */
-            padding: 5px 0; /* เพิ่ม padding เล็กน้อยเพื่อให้คลิกง่ายขึ้น */
+            white-space: nowrap;
+            padding: 5px 0;
         }
 
         nav a i {
@@ -53,36 +52,36 @@
 
         /* --- Style for Login/Register Buttons --- */
         .auth-buttons {
-            margin-left: 20px; /* เพิ่มระยะห่างจากเมนูหลัก */
+            margin-left: 20px;
             display: flex;
-            gap: 10px; /* ระยะห่างระหว่างปุ่มเข้าระบบและสมัครสมาชิก */
-            align-items: center; /* จัดให้ปุ่มอยู่กึ่งกลางแนวตั้ง */
+            gap: 10px;
+            align-items: center;
         }
 
         .auth-buttons .btn {
-            background-color: #00796b; /* สีเขียวเข้ม */
+            background-color: #00796b;
             color: white;
             padding: 8px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 1rem;
-            text-decoration: none; /* ลบขีดเส้นใต้ */
+            text-decoration: none;
             transition: background-color 0.3s ease;
             white-space: nowrap;
-            font-family: 'Kanit', sans-serif; /* ทำให้ปุ่มใช้ฟอนต์ Kanit */
+            font-family: 'Kanit', sans-serif;
         }
 
         .auth-buttons .btn.register {
-            background-color: #e67e22; /* สีส้ม */
+            background-color: #e67e22;
         }
 
         .auth-buttons .btn:hover {
-            background-color: #004d40; /* สีเขียวเข้มขึ้นเมื่อเมาส์ชี้ */
+            background-color: #004d40;
         }
 
         .auth-buttons .btn.register:hover {
-            background-color: #d35400; /* สีส้มเข้มขึ้นเมื่อเมาส์ชี้ */
+            background-color: #d35400;
         }
 
         header {
@@ -93,7 +92,7 @@
             font-size: 2rem;
             letter-spacing: 1px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-top: 60px; /* เว้นที่ให้ Navbar */
+            margin-top: 60px;
         }
 
         h2 {
@@ -102,13 +101,33 @@
             color: #333;
         }
 
+        /* --- Search Bar Styles --- */
+        .search-container {
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4; /* สีพื้นหลังสำหรับส่วนค้นหา */
+            border-bottom: 1px solid #eee;
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            width: 90%; /* ปรับให้กว้างขึ้น */
+            max-width: 500px; /* เพิ่ม max-width */
+            font-size: 16px;
+            margin-bottom: 0; /* ลบ margin-bottom ที่เกินมา */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box; /* สำคัญเพื่อให้ padding ไม่เกิน width */
+            font-family: 'Kanit', sans-serif;
+        }
+
         .drink-list {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
             padding: 20px;
-            flex-grow: 1; /* ทำให้เนื้อหานี้ขยายเต็มที่ ดัน footer ลงไป */
+            flex-grow: 1;
         }
 
         .drink-item {
@@ -118,7 +137,7 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             overflow: hidden;
             transition: transform 0.2s ease;
-            text-align: center; /* จัดข้อความให้อยู่กึ่งกลาง */
+            text-align: center;
         }
 
         .drink-item:hover {
@@ -148,31 +167,30 @@
 
         /* --- Modal Styles (Login/Register) --- */
         .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1001; /* Sit on top, higher than nav */
+            display: none;
+            position: fixed;
+            z-index: 1001;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.6); /* Black w/ more opacity */
+            background-color: rgba(0,0,0,0.6);
             padding-top: 60px;
         }
 
         .modal-content {
             background-color: #fefefe;
-            margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+            margin: 5% auto 15% auto;
             border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
-            max-width: 500px; /* กำหนดขนาดสูงสุด */
+            width: 80%;
+            max-width: 500px;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             -webkit-animation: animatezoom 0.6s;
             animation: animatezoom 0.6s;
         }
 
-        /* Full-width input fields in modals */
         .modal-content input[type=text],
         .modal-content input[type=password],
         .modal-content input[type=email] {
@@ -183,10 +201,9 @@
             border: 1px solid #ccc;
             box-sizing: border-box;
             border-radius: 5px;
-            font-family: 'Kanit', sans-serif; /* ทำให้ input ใช้ฟอนต์ Kanit */
+            font-family: 'Kanit', sans-serif;
         }
 
-        /* Buttons within modals */
         .modal-content button {
             background-color: #04AA6D;
             color: white;
@@ -198,7 +215,7 @@
             border-radius: 5px;
             font-size: 1rem;
             transition: opacity 0.3s ease, background-color 0.3s ease;
-            font-family: 'Kanit', sans-serif; /* ทำให้ปุ่มใช้ฟอนต์ Kanit */
+            font-family: 'Kanit', sans-serif;
         }
 
         .modal-content button:hover {
@@ -206,7 +223,6 @@
             background-color: #038a5a;
         }
 
-        /* Cancel button specific style */
         .modal-content .cancelbtn {
             width: auto;
             padding: 10px 18px;
@@ -216,7 +232,6 @@
             background-color: #d32f2f;
         }
 
-        /* Center avatar image */
         .imgcontainer {
             text-align: center;
             margin: 24px 0 12px 0;
@@ -231,18 +246,15 @@
             border: 3px solid #eee;
         }
 
-        /* Container for modal form elements */
         .container {
             padding: 16px;
         }
 
-        /* Forgot password link */
         span.psw {
             float: right;
             padding-top: 16px;
         }
 
-        /* Close button (x) for modals */
         .modal .close {
             position: absolute;
             right: 20px;
@@ -259,14 +271,12 @@
             cursor: pointer;
         }
 
-        /* Clear floats (for cancel/signup buttons in register modal) */
         .clearfix::after {
             content: "";
             clear: both;
             display: table;
         }
 
-        /* Animation for modals */
         @-webkit-keyframes animatezoom {
             from {-webkit-transform: scale(0)}
             to {-webkit-transform: scale(1)}
@@ -285,7 +295,7 @@
             font-family: 'Kanit', sans-serif;
             width: 100%;
             box-sizing: border-box;
-            margin-top: auto; /* ทำให้ footer ไปอยู่ด้านล่างสุด */
+            margin-top: auto;
         }
 
         footer h3 {
@@ -319,7 +329,7 @@
             border-radius: 5px;
             margin-right: 10px;
             width: calc(70% - 10px);
-            font-family: 'Kanit', sans-serif; /* ทำให้ input ใช้ฟอนต์ Kanit */
+            font-family: 'Kanit', sans-serif;
         }
 
         footer form button {
@@ -330,15 +340,15 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
-            font-family: 'Kanit', sans-serif; /* ทำให้ปุ่มใช้ฟอนต์ Kanit */
+            font-family: 'Kanit', sans-serif;
         }
 
         footer form button:hover {
             background-color: #eee;
         }
 
-        .copyright-footer { /* Class สำหรับ footer ล่างสุด */
-            background-color: #ff6b6b; /* สีแดงของ Navbar */
+        .copyright-footer {
+            background-color: #ff6b6b;
             color: white;
             padding: 15px;
             text-align: center;
@@ -347,7 +357,6 @@
             box-sizing: border-box;
         }
 
-        /* Specific styles for Login vs Register buttons in modal forms */
         .signup-btn-group .cancelbtn, .signup-btn-group .signupbtn {
             float: left;
             width: 50%;
@@ -356,21 +365,24 @@
         /* Responsive adjustments for smaller screens */
         @media (max-width: 768px) {
             nav {
-                flex-direction: column; /* จัดเรียงเมนูและปุ่มเป็นคอลัมน์เมื่อหน้าจอเล็ก */
-                align-items: center; /* จัดให้อยู่กึ่งกลาง */
-                position: static; /* ปรับให้ Navbar ไม่ fixed บนมือถือเพื่อไม่ให้ทับเนื้อหา */
+                flex-direction: column;
+                align-items: center;
+                position: static;
             }
             .auth-buttons {
                 margin-left: 0;
-                margin-top: 15px; /* เพิ่มระยะห่างด้านบน */
+                margin-top: 15px;
             }
             header {
-                font-size: 1.7rem; /* ปรับขนาด Header สำหรับมือถือ */
-                margin-top: 0; /* ไม่ต้องมี margin-top บนมือถือ เพราะ Navbar ไม่ fixed */
+                font-size: 1.7rem;
+                margin-top: 0;
             }
             .modal-content {
                 width: 95%;
                 margin: 5% auto;
+            }
+            .search-container input[type="text"] {
+                width: 100%;
             }
         }
     </style>
@@ -393,6 +405,11 @@
     </nav>
 
     <header>เมนูเครื่องดื่ม - ไข่หวานพาแซ่บ</header>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" onkeyup="searchList()" placeholder="พิมพ์ชื่อเครื่องดื่ม...">
+    </div>
+
     <div class="drink-list">
         <div class="drink-item">
             <img class="drink-image" src="ดื่ม - ไข่หวานพาแซ่บ/1.jpg" alt="กาแฟเย็น">
@@ -611,6 +628,27 @@
                 registerModal.style.display = "none";
             }
         });
+
+        // --- Search Function ---
+        function searchList() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const drinkList = document.querySelector(".drink-list"); // เลือก div ที่มี class drink-list
+            const drinkItems = drinkList.getElementsByClassName('drink-item'); // เลือก item เครื่องดื่มแต่ละอัน
+
+            for (let i = 0; i < drinkItems.length; i++) {
+                const item = drinkItems[i];
+                // ค้นหาจากชื่อเครื่องดื่มใน .drink-name
+                const drinkName = item.querySelector('.drink-name').textContent || item.querySelector('.drink-name').innerText;
+                
+                // ตรวจสอบว่าชื่อเครื่องดื่มมีคำที่ค้นหาอยู่หรือไม่
+                if (drinkName.toLowerCase().includes(filter)) {
+                    item.style.display = ""; // แสดงรายการ
+                } else {
+                    item.style.display = "none"; // ซ่อนรายการ
+                }
+            }
+        }
     </script>
 </body>
 </html>
